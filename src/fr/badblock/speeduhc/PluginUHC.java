@@ -132,7 +132,7 @@ public class PluginUHC extends BadblockPlugin {
 			getAPI().setMapProtector(new UHCMapProtector());
 			getAPI().enableAntiSpawnKill();
 
-			getAPI().getGameServer().whileRunningConnection(WhileRunningConnectionTypes.BACKUP);
+			getAPI().getGameServer().whileRunningConnection(WhileRunningConnectionTypes.SPECTATOR);
 
 			new MoveListener();
 			new DeathListener();
