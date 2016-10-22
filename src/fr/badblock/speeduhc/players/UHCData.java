@@ -33,12 +33,12 @@ public class UHCData implements InGameData {
 	public double   receivedDamage = 0;
 
 	public int getScore(){
-		double ratio = givedDamage / (receivedDamage == 0 ? 1 : receivedDamage);
+		double ratio = (givedDamage * 5) / (receivedDamage == 0 ? 1 : receivedDamage);
 		
 		if(death)
 			ratio /= 5;
 		
-		return (int) ( (kills * 25) * ratio );
+		return (int) ( (kills * 5) * ratio );
 	}
 	
 	public String deathData(BadblockPlayer player){
@@ -65,8 +65,8 @@ public class UHCData implements InGameData {
 	}
 	
 	public void doReward(BadblockPlayer bp, BadblockTeam winner, BadblockPlayer winnerPlayer, Location winnerLocation, Location looserLocation){
-		double badcoins = getScore() / 10;
-		double xp	    = getScore() / 5;
+		double badcoins = getScore() / 4;
+		double xp	    = getScore() / 2;
 
 		if((winner != null && winner.equals(bp.getTeam())) || (winnerPlayer != null && winnerPlayer.equals(bp))){
 			bp.teleport(winnerLocation);
