@@ -12,7 +12,7 @@ import fr.badblock.speeduhc.PluginUHC;
 
 public class UHCCommand extends AbstractCommand {
 	public UHCCommand() {
-		super("uhcspeed", new TranslatableString("commands.speeduhc.usage"), GamePermission.ADMIN, "uhc");
+		super("uhcspeed", new TranslatableString("commands.speeduhc.usage"), GamePermission.ADMIN, GamePermission.ADMIN, GamePermission.ADMIN, "uhc");
 		allowConsole(false);
 	}
 

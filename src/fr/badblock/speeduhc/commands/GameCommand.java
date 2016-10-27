@@ -13,7 +13,7 @@ import fr.badblock.speeduhc.runnables.StartRunnable;
 
 public class GameCommand extends AbstractCommand {
 	public GameCommand() {
-		super("game", new TranslatableString("commands.gspeeduhc.usage"), GamePermission.BMODERATOR);
+		super("game", new TranslatableString("commands.gspeeduhc.usage"), GamePermission.BMODERATOR, GamePermission.BMODERATOR, GamePermission.BMODERATOR);
 		allowConsole(false);
 	}
 
