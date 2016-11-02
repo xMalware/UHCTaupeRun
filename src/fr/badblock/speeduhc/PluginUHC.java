@@ -29,6 +29,7 @@ import fr.badblock.speeduhc.listeners.DamageListener;
 import fr.badblock.speeduhc.listeners.DeathListener;
 import fr.badblock.speeduhc.listeners.JoinListener;
 import fr.badblock.speeduhc.listeners.MoveListener;
+import fr.badblock.speeduhc.listeners.PartyJoinListener;
 import fr.badblock.speeduhc.listeners.QuitListener;
 import fr.badblock.speeduhc.listeners.UHCMapProtector;
 import fr.badblock.speeduhc.runnables.PreStartRunnable;
@@ -137,6 +138,7 @@ public class PluginUHC extends BadblockPlugin {
 			new MoveListener();
 			new DeathListener();
 			new JoinListener();
+			new PartyJoinListener();
 			new CraftListener();
 			new DamageListener();
 			new QuitListener();
