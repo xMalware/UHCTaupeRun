@@ -84,6 +84,9 @@ public class DeathmatchRunnable extends BukkitRunnable implements TimeProvider {
 
 		BadblockTeam   winner 		= getTeam();
 		BadblockPlayer winnerPlayer = winner == null ? getPlayer() : null;
+		if (winnerPlayer != null) {
+			winnerPlayer.getPlayerData().addRankedPoints(3);
+		}
 
 		GameAPI.getAPI().getGameServer().setGameState(GameState.FINISHED);
 
