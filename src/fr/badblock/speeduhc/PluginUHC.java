@@ -19,6 +19,7 @@ import fr.badblock.gameapi.run.BadblockGame;
 import fr.badblock.gameapi.run.BadblockGameData;
 import fr.badblock.gameapi.run.RunType;
 import fr.badblock.gameapi.utils.BorderUtils;
+import fr.badblock.gameapi.utils.BukkitUtils;
 import fr.badblock.gameapi.utils.GameRules;
 import fr.badblock.gameapi.utils.general.JsonUtils;
 import fr.badblock.speeduhc.commands.GameCommand;
@@ -109,6 +110,11 @@ public class PluginUHC extends BadblockPlugin {
 			getAPI().setDefaultKitContentManager(true);
 
 			maxPlayers = !configuration.allowTeams ? configuration.maxPlayersInTeam : getAPI().getTeams().size() * configuration.maxPlayersInTeam;
+			try {
+				BukkitUtils.setMaxPlayers(maxPlayers);
+			} catch (ReflectiveOperationException e) {
+				e.printStackTrace();
+			}
 			kits	   = getAPI().loadKits(GameAPI.getInternalGameName());
 
 			// Chargement des fonctionnalités de l'API non utilisées par défaut
