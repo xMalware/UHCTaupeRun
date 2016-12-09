@@ -65,7 +65,7 @@ public class GameCommand extends AbstractCommand {
 				plug.setMaxPlayers(GameAPI.getAPI().getTeams().size() * perTeam);
 				try {
 					BukkitUtils.setMaxPlayers(GameAPI.getAPI().getTeams().size() * perTeam);
-				} catch (ReflectiveOperationException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
