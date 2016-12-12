@@ -75,6 +75,33 @@ public class GameCommand extends AbstractCommand {
 				
 				player.sendTranslatedMessage("commands.grush.modifycount");
 			break;
+			case "players":
+				if (plug.getConfiguration().allowTeams) {
+					player.sendTranslatedMessage("commands.grush.unabletochangeplayers");
+					return true;
+				}
+				if(args.length != 2)
+					return false;
+				
+				int maxPlayers = 24;
+				
+				try {
+					maxPlayers = Integer.parseInt(args[1]);
+				} catch(Exception e){
+					return false;
+				}
+				
+				plug.getConfiguration().maxPlayersInTeam = maxPlayers;
+				plug.getConfiguration().minPlayers = maxPlayers / 2;
+				plug.setMaxPlayers(maxPlayers);
+				try {
+					BukkitUtils.setMaxPlayers(maxPlayers);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				player.sendTranslatedMessage("commands.grush.modifycount");
+			break;
 			default: return false;
 		}
 		
