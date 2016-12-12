@@ -38,7 +38,6 @@ public class MoveListener extends BadListener {
 				EntityDamageEvent event = new EntityDamageEvent(player, EntityDamageEvent.DamageCause.VOID, player.getHealth());
 				player.setLastDamageCause(event);
 				Bukkit.getServer().getPluginManager().callEvent(event);
-				player.setHealth(0.0D);
 			}
 		}
 	}
