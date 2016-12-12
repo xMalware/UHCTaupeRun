@@ -35,7 +35,10 @@ public class DamageListener extends BadListener  {
 	
 	@EventHandler(ignoreCancelled=true,priority=EventPriority.HIGHEST)
 	public void onDamageNormal(EntityDamageByEntityEvent e){
-		if(inGame() && e.getEntityType() == EntityType.PLAYER && !PvPRunnable.pvp && (e.getDamager().getType() == EntityType.PLAYER || !PvERunnable.pve)){
+		if(inGame() && e.getEntityType() == EntityType.PLAYER && !PvPRunnable.pvp &&
+				(e.getDamager().getType() == EntityType.PLAYER ||
+				(e.getDamager() != null && e.getDamager() instanceof Projectile && ((Projectile)e.getDamager()).getShooter() != null &&
+				((Projectile)e.getDamager()).getShooter() instanceof Player && !PvERunnable.pve))) {
 			e.setCancelled(true);
 		}
 
