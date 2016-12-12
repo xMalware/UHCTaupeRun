@@ -196,7 +196,7 @@ public class UHCMapProtector implements MapProtector {
 
 	@Override
 	public boolean canEntityBeingDamaged(Entity entity) {
-		return true;
+		return inGame() && PvERunnable.pve;
 	}
 
 	@Override
@@ -206,7 +206,7 @@ public class UHCMapProtector implements MapProtector {
 	
 	@Override
 	public boolean canEntityBeingDamaged(Entity entity, BadblockPlayer badblockPlayer) {
-		return true;
+		return inGame() && PvERunnable.pve;
 	}
 
 }
