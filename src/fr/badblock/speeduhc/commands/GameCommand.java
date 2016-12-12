@@ -47,6 +47,10 @@ public class GameCommand extends AbstractCommand {
 				player.sendTranslatedMessage(msg);
 			break;
 			case "playersperteam":
+				if (!plug.getConfiguration().allowTeams) {
+					player.sendTranslatedMessage("commands.grush.unabletochangeplayersperteam");
+					return true;
+				}
 				if(args.length != 2)
 					return false;
 				
