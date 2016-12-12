@@ -1,5 +1,8 @@
 package fr.badblock.speeduhc.listeners;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -45,7 +48,16 @@ public class DeathListener extends BadListener {
 		}
 	}
 
+	private Map<String, Long> lastDeath = new HashMap<>();
+
 	private void death(FakeDeathEvent e, BadblockPlayer player, Entity killer, DamageCause last){
+		if (lastDeath.containsKey(player.getName())) {
+			if (lastDeath.get(player.getName()) > System.currentTimeMillis()) {
+				e.setCancelled(true);
+				return;
+			}
+		}
+		lastDeath.put(player.getName(), System.currentTimeMillis() + 1000L);
 		Location respawnPlace = null;
 
 		if (player.getOpenInventory() != null && player.getOpenInventory().getCursor() != null)
@@ -61,7 +73,7 @@ public class DeathListener extends BadListener {
 		player.sendTranslatedTitle("uhcspeed.player-loose-title");
 		player.sendTimings(20, 80, 20);
 		e.setLightning(true);
-		
+
 		if(team != null){
 
 			e.setDeathMessageEnd(new TranslatableString("uhcspeed.player-loose-team", player.getName(), team.getChatName()));
@@ -74,13 +86,13 @@ public class DeathListener extends BadListener {
 
 				new TranslatableString("uhcspeed.team-loose", team.getChatName()).broadcast();;
 			}
-			
+
 		} else {
 			e.setDeathMessageEnd(new TranslatableString("uhcspeed.player-loose", player.getName()));
 		}
-		
+
 		GameAPI.getAPI().getOnlinePlayers().forEach(p -> p.playSound(Sound.WITHER_SPAWN));
-		
+
 		player.setBadblockMode(BadblockMode.SPECTATOR);
 		e.setTimeBeforeRespawn(0);
 
