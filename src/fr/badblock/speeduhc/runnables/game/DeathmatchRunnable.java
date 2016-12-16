@@ -12,7 +12,6 @@ import fr.badblock.gameapi.game.GameState;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.players.BadblockPlayer.BadblockMode;
 import fr.badblock.gameapi.players.BadblockTeam;
-import fr.badblock.gameapi.utils.BorderUtils;
 import fr.badblock.gameapi.utils.BukkitUtils;
 import fr.badblock.gameapi.utils.i18n.TranslatableString;
 import fr.badblock.speeduhc.PluginUHC;
@@ -24,13 +23,11 @@ import fr.badblock.speeduhc.runnables.EndEffectRunnable;
 import fr.badblock.speeduhc.runnables.KickRunnable;
 
 public class DeathmatchRunnable extends BukkitRunnable implements TimeProvider {
-	public static int generalTime = 32 * 60;
+	public static int generalTime = 35 * 60;
 	public static boolean forceEnd = false;
 
 	public DeathmatchRunnable() {
 		UHCScoreboard.setTimeProvider(this);
-
-		BorderUtils.setBorder(5, generalTime - 30);
 	}
 
 	public static int countEntities(){
