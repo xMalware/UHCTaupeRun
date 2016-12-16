@@ -25,6 +25,7 @@ public class StartRunnable extends BukkitRunnable {
 	
 	@Override
 	public void run() {
+		GameAPI.setJoinable(time > 10);
 		if(time == 0){
 			for(Player player : Bukkit.getOnlinePlayers()){
 				BadblockPlayer bPlayer = (BadblockPlayer) player;
