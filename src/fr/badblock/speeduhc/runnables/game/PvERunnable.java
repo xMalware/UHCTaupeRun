@@ -13,10 +13,11 @@ import fr.badblock.speeduhc.players.UHCScoreboard;
 import fr.badblock.speeduhc.runnables.StartRunnable;
 
 public class PvERunnable extends BukkitRunnable implements TimeProvider {
-	public static boolean   pve  = false;
+	public static boolean   pve   = false;
+	public static boolean   isScd = false;
 	
 	public static final int TIME = 60 * 2;
-	private int 			time = TIME;
+	private int 			time = TIME / (isScd ? 4 : 1);
 	
 	public PvERunnable() {
 		UHCScoreboard.setTimeProvider(this);
@@ -57,7 +58,14 @@ public class PvERunnable extends BukkitRunnable implements TimeProvider {
 				bPlayer.sendTimings(2, 30, 2);
 			}
 			
-			new PvPRunnable().runTaskTimer(GameAPI.getAPI(), 20L, 20L);
+			if(!isScd){
+				new PvPRunnable().runTaskTimer(GameAPI.getAPI(), 20L, 20L);
+			} else {
+				StartRunnable.gameTask = new DeathmatchRunnable();
+				StartRunnable.gameTask.runTaskTimer(GameAPI.getAPI(), 20L, 20L);
+			}
+			
+			isScd = true;
 		}
 	}
 	

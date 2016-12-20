@@ -58,9 +58,7 @@ public class PvPRunnable extends BukkitRunnable implements TimeProvider {
 			}
 			
 			new EndTeleportRunnable().runTaskTimer(GameAPI.getAPI(), 0, 5L);
-			
-			StartRunnable.gameTask = new DeathmatchRunnable();
-			StartRunnable.gameTask.runTaskTimer(GameAPI.getAPI(), 20L, 20L);
+			new PvPRunnable().runTaskTimer(GameAPI.getAPI(), 0, 20L);
 		}
 	}
 
