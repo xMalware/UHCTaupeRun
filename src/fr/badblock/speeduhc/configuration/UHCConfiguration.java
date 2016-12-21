@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class UHCConfiguration {
-	public String 	   		   fallbackServer   = "lobby";
-	public int    	   		   maxPlayersInTeam = 4;
-	public boolean			   allowTeams		= true;
+	public String 	   		   fallbackServer    = "lobby";
+	public int    	   		   maxPlayersInTeam  = 4;
+	public boolean			   allowTeams		 = true;
 	public MapLocation 		   spawn;
-	public int				   mapSize			= 500;
-	public MapSelection		   spawnZone		= new MapSelection();
+	public int				   mapSize			 = 500;
+	public MapSelection		   spawnZone		 = new MapSelection();
 	
-	public int				   minPlayers		= 10;
+	public int				   minPlayers		 = 10;
+	
+	public boolean			   teleportAtPrepEnd = true;
 }

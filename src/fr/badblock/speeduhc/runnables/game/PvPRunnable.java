@@ -8,29 +8,30 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.badblock.gameapi.GameAPI;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.utils.i18n.TranslatableString;
+import fr.badblock.speeduhc.PluginUHC;
 import fr.badblock.speeduhc.players.TimeProvider;
 import fr.badblock.speeduhc.players.UHCScoreboard;
 import fr.badblock.speeduhc.runnables.StartRunnable;
 
 public class PvPRunnable extends BukkitRunnable implements TimeProvider {
 	public static boolean pvp = false;
-	
+
 	public static final int TIME = 20 * 60;
 	private 			int time = TIME;
-	
+
 	public PvPRunnable() {
 		UHCScoreboard.setTimeProvider(this);
 	}
-	
+
 	@Override
 	public void run() {
 		DeathmatchRunnable.generalTime--;
 		time--;
-		
+
 		if(DeathmatchRunnable.countEntities() <= 1){
 			cancel();
 			DeathmatchRunnable.doEnd();
-			
+
 			return;
 		}
 
@@ -46,19 +47,24 @@ public class PvPRunnable extends BukkitRunnable implements TimeProvider {
 			}
 		} else if(time == 0){
 			cancel();
-			
+
 			pvp = true;
 			TranslatableString title = new TranslatableString("uhcspeed.pvp.title");
 
 			for(Player player : Bukkit.getOnlinePlayers()){
 				BadblockPlayer bPlayer = (BadblockPlayer) player;
-				
+
 				bPlayer.sendTranslatedTitle(title.getKey(), title.getObjects());
 				bPlayer.sendTimings(2, 30, 2);
 			}
-			
-			new EndTeleportRunnable().runTaskTimer(GameAPI.getAPI(), 0, 5L);
-			new PvPRunnable().runTaskTimer(GameAPI.getAPI(), 0, 20L);
+
+			if(PluginUHC.getInstance().getConfiguration().teleportAtPrepEnd){
+				new EndTeleportRunnable().runTaskTimer(GameAPI.getAPI(), 0, 5L);
+				new PvERunnable().runTaskTimer(GameAPI.getAPI(), 0, 20L);
+			} else {
+				StartRunnable.gameTask = new DeathmatchRunnable();
+				StartRunnable.gameTask.runTaskTimer(GameAPI.getAPI(), 20L, 20L);
+			}
 		}
 	}
 
