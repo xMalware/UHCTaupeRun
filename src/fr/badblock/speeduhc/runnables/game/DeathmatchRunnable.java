@@ -23,7 +23,7 @@ import fr.badblock.speeduhc.runnables.EndEffectRunnable;
 import fr.badblock.speeduhc.runnables.KickRunnable;
 
 public class DeathmatchRunnable extends BukkitRunnable implements TimeProvider {
-	public static int generalTime = 35 * 60;
+	public static int 	  generalTime;
 	public static boolean forceEnd = false;
 
 	public DeathmatchRunnable() {

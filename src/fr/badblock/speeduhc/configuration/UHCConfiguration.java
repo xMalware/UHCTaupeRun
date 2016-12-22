@@ -16,4 +16,6 @@ public class UHCConfiguration {
 	public int				   minPlayers		 = 10;
 	
 	public boolean			   teleportAtPrepEnd = true;
+	public int				   totalTime		 = 35;
+	
 }
