@@ -16,7 +16,7 @@ import fr.badblock.speeduhc.runnables.StartRunnable;
 public class PvPRunnable extends BukkitRunnable implements TimeProvider {
 	public static boolean pvp = false;
 
-	public static final int TIME = 20 * 60;
+	public static int TIME;
 	private 			int time = TIME;
 
 	public PvPRunnable() {

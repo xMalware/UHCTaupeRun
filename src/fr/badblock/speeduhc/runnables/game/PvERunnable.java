@@ -16,7 +16,7 @@ public class PvERunnable extends BukkitRunnable implements TimeProvider {
 	public static boolean   pve   = false;
 	public static boolean   isScd = false;
 	
-	public static final int TIME = 60 * 2;
+	public static int TIME;
 	private int 			time = TIME / (isScd ? 4 : 1);
 	
 	public PvERunnable() {

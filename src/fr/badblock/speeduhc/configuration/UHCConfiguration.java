@@ -17,4 +17,6 @@ public class UHCConfiguration {
 	
 	public boolean			   teleportAtPrepEnd = true;
 	public int				   totalTime		 = 35;
+	public int				   pveTime			 = 2;
+	public int				   pvpTime			 = 20;
 }
