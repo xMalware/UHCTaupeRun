@@ -12,25 +12,32 @@ import fr.badblock.gameapi.game.GameState;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.players.BadblockPlayer.BadblockMode;
 import fr.badblock.gameapi.players.BadblockTeam;
+import fr.badblock.gameapi.utils.BorderUtils;
 import fr.badblock.gameapi.utils.BukkitUtils;
 import fr.badblock.gameapi.utils.i18n.TranslatableString;
 import fr.badblock.speeduhc.PluginUHC;
+import fr.badblock.speeduhc.configuration.UHCConfiguration;
 import fr.badblock.speeduhc.players.TimeProvider;
 import fr.badblock.speeduhc.players.UHCData;
-import fr.badblock.speeduhc.players.UHCScoreboard;
 import fr.badblock.speeduhc.result.UHCResults;
 import fr.badblock.speeduhc.runnables.EndEffectRunnable;
 import fr.badblock.speeduhc.runnables.KickRunnable;
 
-public class DeathmatchRunnable extends BukkitRunnable implements TimeProvider {
-	public static int 	  generalTime;
+public class GameRunnable extends BukkitRunnable implements TimeProvider {
+	public static GameRunnable ins;
 	public static boolean forceEnd = false;
 
-	public DeathmatchRunnable() {
-		UHCScoreboard.setTimeProvider(this);
+	public int time;
+	public int totalTime;
+	
+	public GameRunnable(){
+		ins = this;
+		
+		this.time 	   = 0;
+		this.totalTime = PluginUHC.getInstance().getConfiguration().time.totalTime * 60;
 	}
 
-	public static int countEntities(){
+	private int countEntities(){
 		List<BadblockTeam> to = GameAPI.getAPI().getTeams().stream().filter(team -> team.getOnlinePlayers().isEmpty()).collect(Collectors.toList());
 
 		for(BadblockTeam team : to){
@@ -40,7 +47,7 @@ public class DeathmatchRunnable extends BukkitRunnable implements TimeProvider {
 			GameAPI.getAPI().unregisterTeam(team);
 		}
 
-		if(forceEnd || generalTime == 0)
+		if(forceEnd || time == 0)
 			return 0;
 
 		if(PluginUHC.getInstance().getConfiguration().allowTeams){
@@ -50,7 +57,7 @@ public class DeathmatchRunnable extends BukkitRunnable implements TimeProvider {
 		}
 	}
 
-	public static BadblockTeam getTeam(){
+	private BadblockTeam getTeam(){
 		for(BadblockTeam team : GameAPI.getAPI().getTeams()){
 			if(team.getOnlinePlayers().size() == 0)
 				continue;
@@ -61,7 +68,7 @@ public class DeathmatchRunnable extends BukkitRunnable implements TimeProvider {
 		return null;
 	}
 
-	public static BadblockPlayer getPlayer(){
+	private BadblockPlayer getPlayer(){
 		for(BadblockPlayer player : GameAPI.getAPI().getOnlinePlayers()){
 			if(player.getBadblockMode() == BadblockMode.SPECTATOR)
 				continue;
@@ -72,7 +79,7 @@ public class DeathmatchRunnable extends BukkitRunnable implements TimeProvider {
 		return null;
 	}
 
-	public static void doEnd(){
+	private void doEnd(){
 		int entities = countEntities();
 
 		if(entities == 0){
@@ -119,12 +126,30 @@ public class DeathmatchRunnable extends BukkitRunnable implements TimeProvider {
 
 	@Override
 	public void run() {
+		UHCConfiguration conf = PluginUHC.getInstance().getConfiguration();
+		
+		if(time == 0)
+			new PvERunnable(1).runTaskTimer(GameAPI.getAPI(), 0, 20L);
+		if(time == conf.time.pveTime * 60)
+			new PvPRunnable().runTaskTimer(GameAPI.getAPI(), 0, 20L);
+		if(time == conf.time.prepTime * 60){
+			if(conf.time.teleportAtPrepEnd){
+				new EndTeleportRunnable().runTaskTimer(GameAPI.getAPI(), 0, 5L);
+				new PvERunnable(4).runTaskTimer(GameAPI.getAPI(), 0, 20L);
+			} else {
+				BorderUtils.setBorder(5, totalTime - time - 30);
+			
+				if(conf.manageNether)
+					BorderUtils.setBorder(0, totalTime - time - 30, conf.getNether());
+			}
+		}
+
 		if(countEntities() <= 1){
 			cancel();
 			doEnd();
 		}
 
-		generalTime--;
+		time--;
 	}
 
 	@Override
@@ -134,7 +159,7 @@ public class DeathmatchRunnable extends BukkitRunnable implements TimeProvider {
 
 	@Override
 	public int getTime(int num) {
-		return generalTime;
+		return totalTime - time;
 	}
 
 	@Override

@@ -34,9 +34,6 @@ import fr.badblock.speeduhc.listeners.PartyJoinListener;
 import fr.badblock.speeduhc.listeners.QuitListener;
 import fr.badblock.speeduhc.listeners.UHCMapProtector;
 import fr.badblock.speeduhc.runnables.PreStartRunnable;
-import fr.badblock.speeduhc.runnables.game.DeathmatchRunnable;
-import fr.badblock.speeduhc.runnables.game.PvERunnable;
-import fr.badblock.speeduhc.runnables.game.PvPRunnable;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -156,16 +153,15 @@ public class PluginUHC extends BadblockPlugin {
 			new GameCommand();
 			new UHCCommand();
 
-			BorderUtils.setBorder(configuration.mapSize);
+			BorderUtils.setBorder(configuration.map.overworldSize);
+			
+			if(configuration.map.manageNether)
+				BorderUtils.setBorder(configuration.getNether(), configuration.map.netherSize);
 			
 			Bukkit.getWorlds().forEach(world -> {
 				world.setTime(2000L);
 				world.getEntities().forEach(entity -> entity.remove());
 			});
-			
-			DeathmatchRunnable.generalTime = configuration.totalTime * 60;
-			PvPRunnable.TIME 			   = configuration.pvpTime * 60;
-			PvERunnable.TIME			   = configuration.pveTime * 60;
 		} catch(Throwable e){
 			e.printStackTrace();
 		}

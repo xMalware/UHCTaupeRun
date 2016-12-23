@@ -20,7 +20,7 @@ import fr.badblock.gameapi.players.kits.PlayerKit;
 import fr.badblock.speeduhc.PluginUHC;
 import fr.badblock.speeduhc.UHCAchievementList;
 import fr.badblock.speeduhc.configuration.UHCConfiguration;
-import fr.badblock.speeduhc.runnables.game.PvERunnable;
+import fr.badblock.speeduhc.runnables.game.GameRunnable;
 import lombok.AllArgsConstructor;
 
 public class TeleportRunnable extends BukkitRunnable {
@@ -72,7 +72,7 @@ public class TeleportRunnable extends BukkitRunnable {
 			toTeleport = GameAPI.getAPI().getTeams().stream().map(team -> new TeleportableEntity(team.getOnlinePlayers(), null)).collect(Collectors.toList());
 		else toTeleport = GameAPI.getAPI().getOnlinePlayers().stream().map(player -> new TeleportableEntity(Arrays.asList(player), null)).collect(Collectors.toList());
 	
-		toTeleport = generateLocations(toTeleport, config.mapSize);
+		toTeleport = generateLocations(toTeleport, config.map.overworldSize);
 	}
 	
 	@Override
@@ -95,7 +95,9 @@ public class TeleportRunnable extends BukkitRunnable {
 			
 			if(PluginUHC.getInstance().getConfiguration().allowTeams)
 				new FriendsActionBarRunnable().runTaskTimer(GameAPI.getAPI(), 0, 10L);
-			new PvERunnable().runTaskTimer(GameAPI.getAPI(), 0, 20L);
+			
+			StartRunnable.gameTask = new GameRunnable();
+			StartRunnable.gameTask.runTaskTimer(GameAPI.getAPI(), 0, 20L);
 		}
 	}
 	

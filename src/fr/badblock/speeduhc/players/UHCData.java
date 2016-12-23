@@ -16,7 +16,7 @@ import fr.badblock.gameapi.utils.entities.CreatureType;
 import fr.badblock.gameapi.utils.i18n.TranslatableWord;
 import fr.badblock.gameapi.utils.i18n.Word.WordDeterminant;
 import fr.badblock.speeduhc.UHCAchievementList;
-import fr.badblock.speeduhc.runnables.game.DeathmatchRunnable;
+import fr.badblock.speeduhc.runnables.game.GameRunnable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -49,7 +49,7 @@ public class UHCData implements InGameData {
 	
 	public void killed(BadblockPlayer bp, Entity by, DamageCause cause){
 		this.death     = true;
-		this.deathTime = DeathmatchRunnable.generalTime;
+		this.deathTime = GameRunnable.ins.totalTime - GameRunnable.ins.time;
 		
 		if(deathTime <= 180){
 			bp.getPlayerData().incrementAchievements(bp, UHCAchievementList.UHC_SURVI_1, UHCAchievementList.UHC_SURVI_2, UHCAchievementList.UHC_SURVI_3, UHCAchievementList.UHC_SURVI_4);

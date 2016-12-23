@@ -12,14 +12,14 @@ import fr.badblock.gameapi.utils.i18n.TranslatableString;
 import fr.badblock.gameapi.utils.i18n.messages.GameMessages;
 import fr.badblock.speeduhc.PluginUHC;
 import fr.badblock.speeduhc.players.UHCScoreboard;
-import fr.badblock.speeduhc.runnables.game.DeathmatchRunnable;
+import fr.badblock.speeduhc.runnables.game.GameRunnable;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class StartRunnable extends BukkitRunnable {
 	public    static final int 		          TIME_BEFORE_START = 30;
 	protected static 	   StartRunnable      task 		       = null;
-	public    static 	   DeathmatchRunnable gameTask		   = null;
+	public    static 	   GameRunnable 	  gameTask		   = null;
 
 	private int time;
 	
@@ -103,7 +103,7 @@ public class StartRunnable extends BukkitRunnable {
 	}
 	
 	public static void startGame(boolean force){
-		DeathmatchRunnable.forceEnd = false;
+		GameRunnable.forceEnd = false;
 		
 		if(task == null){
 			task = new StartRunnable(force ? 5 : TIME_BEFORE_START);
@@ -112,7 +112,7 @@ public class StartRunnable extends BukkitRunnable {
 	}
 	
 	public static void stopGame(){
-		DeathmatchRunnable.forceEnd = true;
+		GameRunnable.forceEnd = true;
 		
 		if(task != null){
 			task.cancel();
