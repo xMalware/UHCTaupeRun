@@ -29,10 +29,10 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 
 	public int time;
 	public int totalTime;
-	
+
 	public GameRunnable(){
 		ins = this;
-		
+
 		this.time 	   = 0;
 		this.totalTime = PluginUHC.getInstance().getConfiguration().time.totalTime * 60;
 	}
@@ -107,7 +107,8 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 
 				bp.inGameData(UHCData.class).doReward(bp, winner, winnerPlayer, winnerLocation, looserLocation);
 
-				bp.getCustomObjective().generate();
+				if (bp.getCustomObjective() != null)
+					bp.getCustomObjective().generate();
 			} catch(Exception e){
 				e.printStackTrace();
 			}
@@ -120,14 +121,14 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		
+
 		new KickRunnable().runTaskTimer(GameAPI.getAPI(), 0, 20L);
 	}
 
 	@Override
 	public void run() {
 		UHCConfiguration conf = PluginUHC.getInstance().getConfiguration();
-		
+
 		if(time == 0)
 			new PvERunnable(1).runTaskTimer(GameAPI.getAPI(), 0, 20L);
 		if(time == conf.time.pveTime * 60)
@@ -138,7 +139,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 				new PvERunnable(4).runTaskTimer(GameAPI.getAPI(), 0, 20L);
 			} else {
 				BorderUtils.setBorder(5, totalTime - time - 30);
-			
+
 				if(conf.manageNether)
 					BorderUtils.setBorder(0, totalTime - time - 30, conf.getNether());
 			}
