@@ -14,7 +14,6 @@ import fr.badblock.speeduhc.runnables.StartRunnable;
 
 public class PvERunnable extends BukkitRunnable implements TimeProvider {
 	public static boolean   pve   = false;
-	public static boolean   isScd = false;
 	
 	private int time;
 	
@@ -51,7 +50,6 @@ public class PvERunnable extends BukkitRunnable implements TimeProvider {
 				bPlayer.sendTimings(2, 30, 2);
 			}
 			
-			isScd = true;
 		}
 	}
 	
