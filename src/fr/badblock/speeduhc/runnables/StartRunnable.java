@@ -98,7 +98,7 @@ public class StartRunnable extends BukkitRunnable {
 	public static void joinNotify(int currentPlayers, int maxPlayers){
 		if (task != null) {
 			boolean ok = task.time > 10;
-			task.time -= (TIME_BEFORE_START / Bukkit.getMaxPlayers()) * 0.25;
+			task.time -= (TIME_BEFORE_START / Bukkit.getMaxPlayers()) * 0.75;
 			if (task.time < 10 && ok) task.time = 10;
 			task.time--;
 		}
