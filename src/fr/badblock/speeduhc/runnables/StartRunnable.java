@@ -50,9 +50,6 @@ public class StartRunnable extends BukkitRunnable {
 		}
 		
 		sendTimeHidden(time);
-		boolean ok = time > 10;
-		time -= TIME_BEFORE_START / Bukkit.getMaxPlayers();
-		if (time < 10 && ok) time = 10;
 		
 		time--;
 	}
@@ -99,6 +96,12 @@ public class StartRunnable extends BukkitRunnable {
 	}
 
 	public static void joinNotify(int currentPlayers, int maxPlayers){
+		if (task != null) {
+			boolean ok = task.time > 10;
+			task.time -= (TIME_BEFORE_START / Bukkit.getMaxPlayers()) * 0.25;
+			if (task.time < 10 && ok) task.time = 10;
+			task.time--;
+		}
 		int minPlayers = PluginUHC.getInstance().getConfiguration().minPlayers;
 		
 		if(currentPlayers >= minPlayers)
