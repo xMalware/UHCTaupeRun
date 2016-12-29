@@ -13,7 +13,6 @@ import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.players.BadblockPlayer.BadblockMode;
 import fr.badblock.gameapi.players.BadblockTeam;
 import fr.badblock.gameapi.utils.BorderUtils;
-import fr.badblock.gameapi.utils.BukkitUtils;
 import fr.badblock.gameapi.utils.i18n.TranslatableString;
 import fr.badblock.speeduhc.PluginUHC;
 import fr.badblock.speeduhc.configuration.UHCConfiguration;
@@ -116,7 +115,6 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 
 		try {
 			new UHCResults(winner, winnerPlayer);
-			BukkitUtils.getPlayers().forEach(bp -> bp.sendTranslatedMessage("game.waitforbeingteleportedinanothergame", Bukkit.getServerName().split("_")[0]));
 			new EndEffectRunnable(winnerLocation, winner).runTaskTimer(GameAPI.getAPI(), 0, 1L);
 		} catch(Exception e){
 			e.printStackTrace();
