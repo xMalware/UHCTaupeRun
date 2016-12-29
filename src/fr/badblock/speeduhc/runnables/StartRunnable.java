@@ -51,7 +51,7 @@ public class StartRunnable extends BukkitRunnable {
 		
 		sendTimeHidden(time);
 		boolean ok = time > 10;
-		time = TIME_BEFORE_START / Bukkit.getMaxPlayers();
+		time -= TIME_BEFORE_START / Bukkit.getMaxPlayers();
 		if (time < 10 && ok) time = 10;
 		
 		time--;
