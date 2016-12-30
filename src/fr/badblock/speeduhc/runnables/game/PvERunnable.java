@@ -25,7 +25,6 @@ public class PvERunnable extends BukkitRunnable implements TimeProvider {
 	
 	@Override
 	public void run() {
-		System.out.println("A1");
 		time--;
 
 		if( (time % 10 == 0 || time <= 5) && time > 0 && time <= 30){
@@ -39,7 +38,6 @@ public class PvERunnable extends BukkitRunnable implements TimeProvider {
 				bPlayer.sendTimings(2, 30, 2);
 			}
 		} else if(time == 0){
-			System.out.println("A2 - PVE");
 			cancel();
 			
 			pve = true;

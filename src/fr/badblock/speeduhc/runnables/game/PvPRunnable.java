@@ -25,6 +25,7 @@ public class PvPRunnable extends BukkitRunnable implements TimeProvider {
 	@Override
 	public void run() {
 		time--;
+		System.out.println("A1");
 
 		if( (time % 10 == 0 || time <= 5) && time > 0 && time <= 30){
 			ChatColor 		   color = StartRunnable.getColor(time);
@@ -38,6 +39,7 @@ public class PvPRunnable extends BukkitRunnable implements TimeProvider {
 			}
 		} else if(time == 0){
 			cancel();
+			System.out.println("A2 - PVP");
 
 			pvp = true;
 			TranslatableString title = new TranslatableString("uhcspeed.pvp.title");

@@ -127,9 +127,11 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 	public void run() {
 		UHCConfiguration conf = PluginUHC.getInstance().getConfiguration();
 
+		System.out.println("TIME: " + time + " / " + (conf.time.pveTime * 60));
 		if(time == 0)
 			new PvERunnable(1).runTaskTimer(GameAPI.getAPI(), 0, 20L);
 		if(time == conf.time.pveTime * 60) {
+			System.out.println("OK");
 			new PvPRunnable().runTaskTimer(GameAPI.getAPI(), 0, 20L);
 		}if(time == conf.time.prepTime * 60){
 			if(conf.time.teleportAtPrepEnd){
@@ -148,7 +150,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 			doEnd();
 		}
 
-		time--;
+		time++;
 	}
 
 	@Override
