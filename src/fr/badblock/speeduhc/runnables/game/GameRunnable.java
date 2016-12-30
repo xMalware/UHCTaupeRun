@@ -82,6 +82,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 		int entities = countEntities();
 
 		if(entities == 0){
+			System.out.println("T");
 			Bukkit.shutdown();
 			return;
 		}

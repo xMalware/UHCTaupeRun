@@ -13,6 +13,7 @@ public class KickRunnable extends BukkitRunnable {
 	@Override
 	public void run(){
 		if(time == -3){
+			System.out.println("Z");
 			Bukkit.shutdown();
 		}else if(time <= 5){
 
