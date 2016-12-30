@@ -16,12 +16,12 @@ import fr.badblock.gameapi.players.BadblockTeam;
 public class EndEffectRunnable extends BukkitRunnable {
 	private Location 	 location;
 	private BadblockTeam team;
-	
+
 	public EndEffectRunnable(Location location, BadblockTeam winner){
 		this.location = location.getWorld().getHighestBlockAt(location).getLocation().clone().add(0, 1, 0);
 		this.team	  = winner;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void run(){
@@ -29,7 +29,8 @@ public class EndEffectRunnable extends BukkitRunnable {
 		effect.setSpeed(2);
 		effect.setLongDistance(true);
 		effect.setAmount(100);
-		effect.setData(new BlockData(Material.WOOL, team.getDyeColor().getWoolData()));
+		if (team != null)
+			effect.setData(new BlockData(Material.WOOL, team.getDyeColor().getWoolData()));
 
 		for(Player player : Bukkit.getOnlinePlayers()){
 			BadblockPlayer bplayer = (BadblockPlayer) player;
