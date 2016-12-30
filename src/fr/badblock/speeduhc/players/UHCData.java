@@ -120,11 +120,11 @@ public class UHCData implements InGameData {
 			if(bp.getBadblockMode() == BadblockMode.PLAYER)
 				bp.getPlayerData().incrementStatistic("uhcspeed", UHCScoreboard.LOOSES);
 		}
-		
-		if(badcoins > 20)
-			badcoins = 20;
-		if(xp > 50)
-			xp = 50;
+
+		if(badcoins > 20 * bp.getPlayerData().getBadcoinsMultiplier())
+			badcoins = 20 * bp.getPlayerData().getBadcoinsMultiplier();
+		if(xp > 50 * bp.getPlayerData().getXpMultiplier())
+			xp = 50 * bp.getPlayerData().getXpMultiplier();
 		
 		int rbadcoins = badcoins < 2 ? 2 : (int) badcoins;
 		int rxp		  = xp < 5 ? 5 : (int) xp;
