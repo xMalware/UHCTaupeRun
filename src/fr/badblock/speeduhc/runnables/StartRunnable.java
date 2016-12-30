@@ -29,7 +29,7 @@ public class StartRunnable extends BukkitRunnable {
 		GameAPI.setJoinable(time > 10);
 		if(time == 0){
 			for(BadblockPlayer player : BukkitUtils.getPlayers()){
-				if (player.getCustomObjective() != null)
+				if (player.getCustomObjective() == null)
 					new UHCScoreboard(player);
 			}
 			for(Player player : Bukkit.getOnlinePlayers()){
