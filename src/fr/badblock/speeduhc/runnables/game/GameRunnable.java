@@ -32,8 +32,8 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 	public GameRunnable(){
 		ins = this;
 
-		this.time 	   = 0;
 		this.totalTime = PluginUHC.getInstance().getConfiguration().time.totalTime * 60;
+		this.time 	   = totalTime;
 	}
 
 	private int countEntities(){
@@ -150,7 +150,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 			doEnd();
 		}
 
-		time++;
+		time--;
 	}
 
 	@Override
