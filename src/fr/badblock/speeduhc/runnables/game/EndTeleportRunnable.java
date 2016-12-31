@@ -51,7 +51,7 @@ public class EndTeleportRunnable extends BukkitRunnable {
 			UHCConfiguration conf = PluginUHC.getInstance().getConfiguration();
 			
 			BorderUtils.setBorder(conf.map.overworldSizeAfterTp, 0);
-			BorderUtils.setBorder(5, GameRunnable.ins.totalTime - GameRunnable.ins.time - 30);
+			BorderUtils.setBorder(5, GameRunnable.ins.totalTime - GameRunnable.ins.pastTime - 30);
 			
 			if(conf.map.manageNether)
 				BorderUtils.setBorder(conf.getNether(), 0);

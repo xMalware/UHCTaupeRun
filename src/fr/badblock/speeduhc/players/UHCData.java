@@ -49,7 +49,7 @@ public class UHCData implements InGameData {
 	
 	public void killed(BadblockPlayer bp, Entity by, DamageCause cause){
 		this.death     = true;
-		this.deathTime = GameRunnable.ins.totalTime - GameRunnable.ins.time;
+		this.deathTime = GameRunnable.ins.totalTime - GameRunnable.ins.pastTime;
 		
 		if(deathTime <= 180){
 			bp.getPlayerData().incrementAchievements(bp, UHCAchievementList.UHC_SURVI_1, UHCAchievementList.UHC_SURVI_2, UHCAchievementList.UHC_SURVI_3, UHCAchievementList.UHC_SURVI_4);
