@@ -9,9 +9,6 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.badblock.gameapi.GameAPI;
@@ -54,15 +51,6 @@ public class EndTeleportRunnable extends BukkitRunnable {
 			UHCConfiguration conf = PluginUHC.getInstance().getConfiguration();
 			
 			int rest = GameRunnable.ins.totalTime - GameRunnable.ins.pastTime;
-			if (rest == 0)
-				if(PluginUHC.getInstance().getConfiguration().allowTeams)
-					GameAPI.getAPI().getTeams().stream().forEach(team -> team.getOnlinePlayers().forEach(player -> player.playSound(Sound.AMBIENCE_CAVE)));
-				else GameAPI.getAPI().getRealOnlinePlayers().stream().forEach(player -> player.playSound(Sound.AMBIENCE_CAVE));
-			else if (rest < 0) {
-				if(PluginUHC.getInstance().getConfiguration().allowTeams)
-					GameAPI.getAPI().getTeams().stream().forEach(team -> team.getOnlinePlayers().forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 86400 * 20, 1))));
-				else GameAPI.getAPI().getRealOnlinePlayers().stream().forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 86400 * 20, 1)));
-			}
 			BorderUtils.setBorder(conf.map.overworldSizeAfterTp, 0);
 			BorderUtils.setBorder(5, rest - 30);
 			

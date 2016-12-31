@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.badblock.gameapi.GameAPI;
@@ -146,6 +149,17 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 				if(conf.manageNether)
 					BorderUtils.setBorder(0, totalTime - pastTime - 30, conf.getNether());
 			}
+		}
+		
+
+		if (totalTime - pastTime == 0)
+			if(PluginUHC.getInstance().getConfiguration().allowTeams)
+				GameAPI.getAPI().getTeams().stream().forEach(team -> team.getOnlinePlayers().forEach(player -> player.playSound(Sound.AMBIENCE_CAVE)));
+			else GameAPI.getAPI().getRealOnlinePlayers().stream().forEach(player -> player.playSound(Sound.AMBIENCE_CAVE));
+		else if (totalTime - pastTime < 0) {
+			if(PluginUHC.getInstance().getConfiguration().allowTeams)
+				GameAPI.getAPI().getTeams().stream().forEach(team -> team.getOnlinePlayers().forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 86400 * 20, 1))));
+			else GameAPI.getAPI().getRealOnlinePlayers().stream().forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 86400 * 20, 1)));
 		}
 
 		if(countEntities() <= 1){
