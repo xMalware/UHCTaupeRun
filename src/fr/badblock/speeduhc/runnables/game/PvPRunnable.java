@@ -60,7 +60,7 @@ public class PvPRunnable extends BukkitRunnable implements TimeProvider {
 
 	@Override
 	public int getTime(int num) {
-		return num == 0 ? GameRunnable.ins.pastTime : time;
+		return num == 0 ? GameRunnable.ins.totalTime - GameRunnable.ins.pastTime : time;
 	}
 
 	@Override
