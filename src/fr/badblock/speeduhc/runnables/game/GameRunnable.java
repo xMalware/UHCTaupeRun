@@ -26,14 +26,14 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 	public static GameRunnable ins;
 	public static boolean forceEnd = false;
 
-	public int time;
+	public int pastTime;
 	public int totalTime;
 
 	public GameRunnable(){
 		ins = this;
 
 		this.totalTime = PluginUHC.getInstance().getConfiguration().time.totalTime * 60;
-		this.time 	   = totalTime;
+		this.pastTime  = 0;
 	}
 
 	private int countEntities(){
@@ -46,7 +46,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 			GameAPI.getAPI().unregisterTeam(team);
 		}
 
-		if(forceEnd || time == totalTime)
+		if(forceEnd || totalTime - pastTime <= 0)
 			return 0;
 
 		if(PluginUHC.getInstance().getConfiguration().allowTeams){
@@ -127,21 +127,20 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 	public void run() {
 		UHCConfiguration conf = PluginUHC.getInstance().getConfiguration();
 
-		System.out.println("TIME: " + time + " / " + (conf.time.pveTime * 60));
-		if(time == 0)
+		if(pastTime == 0)
 			new PvERunnable(1).runTaskTimer(GameAPI.getAPI(), 0, 20L);
-		if(time == conf.time.pveTime * 60) {
+		if(pastTime == conf.time.pveTime * 60) {
 			System.out.println("OK");
 			new PvPRunnable().runTaskTimer(GameAPI.getAPI(), 0, 20L);
-		}if(time == conf.time.prepTime * 60){
+		}if(pastTime == conf.time.prepTime * 60){
 			if(conf.time.teleportAtPrepEnd){
 				new EndTeleportRunnable().runTaskTimer(GameAPI.getAPI(), 0, 5L);
 				new PvERunnable(4).runTaskTimer(GameAPI.getAPI(), 0, 20L);
 			} else {
-				BorderUtils.setBorder(5, totalTime - time - 30);
+				BorderUtils.setBorder(5, totalTime - pastTime - 30);
 
 				if(conf.manageNether)
-					BorderUtils.setBorder(0, totalTime - time - 30, conf.getNether());
+					BorderUtils.setBorder(0, totalTime - pastTime - 30, conf.getNether());
 			}
 		}
 
@@ -150,7 +149,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 			doEnd();
 		}
 
-		time--;
+		pastTime++;
 	}
 
 	@Override
@@ -160,7 +159,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 
 	@Override
 	public int getTime(int num) {
-		return totalTime - time;
+		return totalTime - pastTime;
 	}
 
 	@Override
