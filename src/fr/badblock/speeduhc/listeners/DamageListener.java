@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.projectiles.ProjectileSource;
 
 import fr.badblock.gameapi.BadListener;
 import fr.badblock.gameapi.players.BadblockPlayer;
@@ -45,6 +46,13 @@ public class DamageListener extends BadListener  {
 
 		if(e.getEntityType() == EntityType.PLAYER){
 			BadblockPlayer player = (BadblockPlayer) e.getEntity();
+			ProjectileSource projectileSource = null;
+			if (e.getDamager() instanceof Projectile) {
+				Projectile projectile = (Projectile) e.getDamager();
+				projectileSource = projectile.getShooter();
+			}
+			if (projectileSource != null && projectileSource instanceof Player) 
+				e.setCancelled(inGame() && PvPRunnable.pvp);
 			player.inGameData(UHCData.class).receivedDamage += e.getFinalDamage();
 		}
 
