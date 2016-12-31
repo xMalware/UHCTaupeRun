@@ -56,7 +56,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 		if(PluginUHC.getInstance().getConfiguration().allowTeams){
 			return (int) GameAPI.getAPI().getTeams().parallelStream().filter(team -> team.getOnlinePlayers().size() > 0).count();
 		} else {
-			if (GameAPI.getAPI().getRealOnlinePlayers().size() == 0) return -1;
+			if (GameAPI.getAPI().getRealOnlinePlayers().isEmpty()) return -1;
 			return GameAPI.getAPI().getRealOnlinePlayers().size();
 		}
 	}
