@@ -19,7 +19,6 @@ import fr.badblock.speeduhc.PluginUHC;
 import fr.badblock.speeduhc.configuration.UHCConfiguration;
 import fr.badblock.speeduhc.players.TimeProvider;
 import fr.badblock.speeduhc.players.UHCData;
-import fr.badblock.speeduhc.result.UHCResults;
 import fr.badblock.speeduhc.runnables.EndEffectRunnable;
 import fr.badblock.speeduhc.runnables.KickRunnable;
 
@@ -79,6 +78,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 	}
 
 	private void doEnd(){
+		System.out.println("01");
 		int entities = countEntities();
 
 		if(entities == 0){
@@ -86,35 +86,39 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 			return;
 		}
 
+		System.out.println("02");
 		BadblockTeam   winner 		= getTeam();
 		BadblockPlayer winnerPlayer = winner == null ? getPlayer() : null;
 		if (winnerPlayer != null) {
 			winnerPlayer.getPlayerData().addRankedPoints(3);
 		}
 
+		System.out.println("03");
 		GameAPI.getAPI().getGameServer().setGameState(GameState.FINISHED);
-
+		System.out.println("04");
 		Location winnerLocation = PluginUHC.getInstance().getDefaultLoc();
 		Location looserLocation = winnerLocation.clone().add(0d, 7d, 0d);
 
 		for(BadblockPlayer player : GameAPI.getAPI().getOnlinePlayers()){
 			try {
 				BadblockPlayer bp = (BadblockPlayer) player;
+				System.out.println("05");
 				bp.heal();
+				System.out.println("06");
 				bp.clearInventory();
+				System.out.println("07");
 				bp.setInvulnerable(true);
+				System.out.println("08");
 
 				bp.inGameData(UHCData.class).doReward(bp, winner, winnerPlayer, winnerLocation, looserLocation);
-
-				if (bp.getCustomObjective() != null)
-					bp.getCustomObjective().generate();
+				System.out.println("10");
 			} catch(Exception e){
 				e.printStackTrace();
 			}
 		}
 
 		try {
-			new UHCResults(winner, winnerPlayer);
+			//new UHCResults(winner, winnerPlayer);
 			new EndEffectRunnable(winnerLocation, winner).runTaskTimer(GameAPI.getAPI(), 0, 1L);
 		} catch(Exception e){
 			e.printStackTrace();

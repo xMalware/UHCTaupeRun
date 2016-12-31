@@ -1,6 +1,7 @@
 package fr.badblock.speeduhc.runnables;
 
 import org.bukkit.Bukkit;
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,6 +32,8 @@ public class EndEffectRunnable extends BukkitRunnable {
 		effect.setAmount(100);
 		if (team != null)
 			effect.setData(new BlockData(Material.WOOL, team.getDyeColor().getWoolData()));
+		else
+			effect.setData(new BlockData(Material.WOOL, DyeColor.GREEN.getWoolData()));
 
 		for(Player player : Bukkit.getOnlinePlayers()){
 			BadblockPlayer bplayer = (BadblockPlayer) player;
