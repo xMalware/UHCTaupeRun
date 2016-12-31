@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.event.block.Action;
 
@@ -196,7 +197,7 @@ public class UHCMapProtector implements MapProtector {
 
 	@Override
 	public boolean canEntityBeingDamaged(Entity entity) {
-		return inGame() && PvERunnable.pve;
+		return inGame() && ((entity.getType().equals(EntityType.PLAYER) && PvERunnable.pve) || !entity.getType().equals(EntityType.PLAYER));
 	}
 
 	@Override
