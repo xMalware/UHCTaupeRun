@@ -81,7 +81,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 	private void doEnd(){
 		int entities = countEntities();
 
-		if(entities == -1){
+		if(entities == 0){
 			Bukkit.shutdown();
 			return;
 		}
@@ -145,8 +145,9 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 		}
 
 		if(countEntities() <= 1){
-			cancel();
+			System.out.println("End");
 			doEnd();
+			cancel();
 		}
 
 		pastTime++;

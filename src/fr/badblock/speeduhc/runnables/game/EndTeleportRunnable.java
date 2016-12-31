@@ -31,7 +31,7 @@ public class EndTeleportRunnable extends BukkitRunnable {
 			toTeleport = GameAPI.getAPI().getTeams().stream().map(team -> new TeleportableEntity(team.getOnlinePlayers(), null)).collect(Collectors.toList());
 		else toTeleport = GameAPI.getAPI().getRealOnlinePlayers().stream().map(player -> new TeleportableEntity(Arrays.asList(player), null)).collect(Collectors.toList());
 	
-		toTeleport = generateLocations(toTeleport, 300);
+		toTeleport = generateLocations(toTeleport, 300 - 50);
 	}
 	
 	@Override

@@ -55,7 +55,8 @@ public class UHCScoreboard extends BadblockScoreboardGenerator {
 			
 				if(id == null)
 					continue;
-				
+				if (time < 0) continue;
+				System.out.println(i18n("uhcspeed.scoreboard.time." + id));
 				objective.changeLine(i, i18n("uhcspeed.scoreboard.time." + id));
 				objective.changeLine(i - 1, i18n("uhcspeed.scoreboard.time", time(time)));
 			
