@@ -6,7 +6,10 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.block.Action;
+import org.bukkit.projectiles.ProjectileSource;
 
 import fr.badblock.gameapi.GameAPI;
 import fr.badblock.gameapi.game.GameState;
@@ -207,7 +210,12 @@ public class UHCMapProtector implements MapProtector {
 	
 	@Override
 	public boolean canEntityBeingDamaged(Entity entity, BadblockPlayer badblockPlayer) {
-		if (entity.getType().equals(EntityType.PLAYER)) return inGame() && PvPRunnable.pvp;
+		ProjectileSource projectileSource = null;
+		if (entity instanceof Projectile) {
+			Projectile projectile = (Projectile) entity;
+			projectileSource = projectile.getShooter();
+		}
+		if (entity.getType().equals(EntityType.PLAYER) || (projectileSource != null && projectileSource instanceof Player)) return inGame() && PvPRunnable.pvp;
 		return inGame() && PvERunnable.pve;
 	}
 
