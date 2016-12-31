@@ -46,12 +46,17 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 			GameAPI.getAPI().unregisterTeam(team);
 		}
 
-		if(forceEnd || totalTime - pastTime <= 0)
-			return 0;
+		if (forceEnd)
+			return -1;
+		
+		if(totalTime - pastTime <= 0)
+			if (GameAPI.getAPI().getRealOnlinePlayers().size() == 0) return -1;
+			else return 0;
 
 		if(PluginUHC.getInstance().getConfiguration().allowTeams){
 			return (int) GameAPI.getAPI().getTeams().parallelStream().filter(team -> team.getOnlinePlayers().size() > 0).count();
 		} else {
+			if (GameAPI.getAPI().getRealOnlinePlayers().size() == 0) return -1;
 			return GameAPI.getAPI().getRealOnlinePlayers().size();
 		}
 	}
@@ -81,7 +86,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 	private void doEnd(){
 		int entities = countEntities();
 
-		if(entities == 0){
+		if(entities == -1){
 			Bukkit.shutdown();
 			return;
 		}
