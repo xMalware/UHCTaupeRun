@@ -13,6 +13,7 @@ import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.players.BadblockPlayer.BadblockMode;
 import fr.badblock.gameapi.players.BadblockTeam;
 import fr.badblock.gameapi.utils.BorderUtils;
+import fr.badblock.gameapi.utils.BukkitUtils;
 import fr.badblock.gameapi.utils.i18n.TranslatableString;
 import fr.badblock.speeduhc.PluginUHC;
 import fr.badblock.speeduhc.configuration.UHCConfiguration;
@@ -149,6 +150,9 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 		}
 
 		pastTime++;
+		for (BadblockPlayer bp : BukkitUtils.getPlayers())
+		if (bp.getCustomObjective() != null)
+			bp.getCustomObjective().generate();
 	}
 
 	@Override

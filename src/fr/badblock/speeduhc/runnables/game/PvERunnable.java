@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.badblock.gameapi.players.BadblockPlayer;
+import fr.badblock.gameapi.utils.BukkitUtils;
 import fr.badblock.gameapi.utils.i18n.TranslatableString;
 import fr.badblock.speeduhc.PluginUHC;
 import fr.badblock.speeduhc.players.TimeProvider;
@@ -26,6 +27,10 @@ public class PvERunnable extends BukkitRunnable implements TimeProvider {
 	@Override
 	public void run() {
 		time--;
+
+		for (BadblockPlayer bp : BukkitUtils.getPlayers())
+		if (bp.getCustomObjective() != null)
+			bp.getCustomObjective().generate();
 
 		if( (time % 10 == 0 || time <= 5) && time > 0 && time <= 30){
 			ChatColor 		   color = StartRunnable.getColor(time);
