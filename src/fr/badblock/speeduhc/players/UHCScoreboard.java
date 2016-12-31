@@ -15,7 +15,7 @@ public class UHCScoreboard extends BadblockScoreboardGenerator {
 
 	public static void setTimeProvider(TimeProvider provider){
 		timeProvider = provider;
-		
+
 		BukkitUtils.forEachPlayers(player -> {
 			if(player.getCustomObjective() == null){
 				new UHCScoreboard(player);
@@ -24,10 +24,10 @@ public class UHCScoreboard extends BadblockScoreboardGenerator {
 	}
 
 	public static final String WINS 	  = "wins",
-							   KILLS 	  = "kills",
-							   DEATHS 	  = "deaths",
-							   LOOSES 	  = "looses";
-	
+			KILLS 	  = "kills",
+			DEATHS 	  = "deaths",
+			LOOSES 	  = "looses";
+
 	private CustomObjective objective;
 	private BadblockPlayer  player;
 
@@ -40,35 +40,37 @@ public class UHCScoreboard extends BadblockScoreboardGenerator {
 		objective.setGenerator(this);
 
 		objective.generate();
-		
+
 		doBadblockFooter(objective);
 		Bukkit.getScheduler().runTaskTimer(GameAPI.getAPI(), this::doTime, 0, 20L);
 	}
-	
+
 	public int doTime(){
 		int i = 14;
-		
+
 		if(timeProvider != null){
 			for(int y=0;y<timeProvider.getProvidedCount();y++){
 				String id = timeProvider.getId(y);
 				int  time = timeProvider.getTime(y);
-			
-				if(id == null)
+
+				if(id == null || time < 0 || !timeProvider.displayed()) {
+					objective.removeLine(i);
+					objective.removeLine(i - 1);
+					i -= 2;
 					continue;
-				if (time < 0) continue;
-				System.out.println(i18n("uhcspeed.scoreboard.time." + id));
+				}	
 				objective.changeLine(i, i18n("uhcspeed.scoreboard.time." + id));
 				objective.changeLine(i - 1, i18n("uhcspeed.scoreboard.time", time(time)));
-			
+
 				i -= 2;
 			}
 		}
-		
+
 		objective.changeLine(i,  ""); i--;
-		
+
 		objective.changeLine(i,  i18n("uhcspeed.scoreboard.aliveplayers", alivePlayers())); i--;
 		objective.changeLine(i,  i18n("uhcspeed.scoreboard.bordersize", "" + BorderUtils.getBorderSize() / 2)); i--;		
-		
+
 		return i;
 	}
 
@@ -92,24 +94,24 @@ public class UHCScoreboard extends BadblockScoreboardGenerator {
 
 		objective.changeLine(2,  "&8&m----------------------");
 	}
-	
+
 	private int alivePlayers(){
 		return (int) GameAPI.getAPI().getOnlinePlayers().stream().filter(p -> !p.inGameData(UHCData.class).isDeath()).count();
 	}
-	
+
 	private int stat(String name){
 		return (int) player.getPlayerData().getStatistics("uhcspeed", name);
 	}
-	
+
 	private String time(int time){
 		String res = "m";
 		int    sec = time % 60;
-		
+
 		res = (time / 60) + res;
 		if(sec < 10){
 			res += "0";
 		}
-		
+
 		return res + sec + "s";
 	}
 
