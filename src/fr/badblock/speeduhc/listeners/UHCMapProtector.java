@@ -207,6 +207,7 @@ public class UHCMapProtector implements MapProtector {
 	
 	@Override
 	public boolean canEntityBeingDamaged(Entity entity, BadblockPlayer badblockPlayer) {
+		if (entity.getType().equals(EntityType.PLAYER)) return inGame() && PvPRunnable.pvp;
 		return inGame() && PvERunnable.pve;
 	}
 
