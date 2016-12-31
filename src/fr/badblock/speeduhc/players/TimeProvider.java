@@ -6,4 +6,6 @@ public interface TimeProvider {
 	public int getTime(int num);
 
 	public int getProvidedCount();
+	
+	public boolean displayed();
 }

@@ -28,7 +28,7 @@ public class EndTeleportRunnable extends BukkitRunnable {
 			toTeleport = GameAPI.getAPI().getTeams().stream().map(team -> new TeleportableEntity(team.getOnlinePlayers(), null)).collect(Collectors.toList());
 		else toTeleport = GameAPI.getAPI().getRealOnlinePlayers().stream().map(player -> new TeleportableEntity(Arrays.asList(player), null)).collect(Collectors.toList());
 	
-		toTeleport = generateLocations(toTeleport, 300 - 50);
+		toTeleport = generateLocations(toTeleport, 200);
 	}
 	
 	@Override
@@ -48,6 +48,7 @@ public class EndTeleportRunnable extends BukkitRunnable {
 		if(toTeleport.isEmpty()){
 			cancel();
 			
+			GameRunnable.ins.enabled = false;
 			UHCConfiguration conf = PluginUHC.getInstance().getConfiguration();
 			
 			int rest = GameRunnable.ins.totalTime - GameRunnable.ins.pastTime;

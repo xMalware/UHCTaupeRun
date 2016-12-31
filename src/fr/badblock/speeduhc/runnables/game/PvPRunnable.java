@@ -69,4 +69,9 @@ public class PvPRunnable extends BukkitRunnable implements TimeProvider {
 	public int getProvidedCount() {
 		return 2;
 	}
+
+	@Override
+	public boolean displayed() {
+		return !pvp;
+	}
 }

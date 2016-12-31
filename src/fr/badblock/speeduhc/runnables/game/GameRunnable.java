@@ -31,6 +31,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 
 	public int pastTime;
 	public int totalTime;
+	boolean enabled = true;
 
 	public GameRunnable(){
 		ins = this;
@@ -81,7 +82,6 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 	}
 
 	private void doEnd(){
-		System.out.println("01");
 		int entities = countEntities();
 
 		if(entities == 0){
@@ -89,32 +89,24 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 			return;
 		}
 
-		System.out.println("02");
 		BadblockTeam   winner 		= getTeam();
 		BadblockPlayer winnerPlayer = winner == null ? getPlayer() : null;
 		if (winnerPlayer != null) {
 			winnerPlayer.getPlayerData().addRankedPoints(3);
 		}
 
-		System.out.println("03");
 		GameAPI.getAPI().getGameServer().setGameState(GameState.FINISHED);
-		System.out.println("04");
 		Location winnerLocation = PluginUHC.getInstance().getDefaultLoc();
 		Location looserLocation = winnerLocation.clone().add(0d, 7d, 0d);
 
 		for(BadblockPlayer player : GameAPI.getAPI().getOnlinePlayers()){
 			try {
 				BadblockPlayer bp = (BadblockPlayer) player;
-				System.out.println("05");
 				bp.heal();
-				System.out.println("06");
 				bp.clearInventory();
-				System.out.println("07");
 				bp.setInvulnerable(true);
-				System.out.println("08");
 
 				bp.inGameData(UHCData.class).doReward(bp, winner, winnerPlayer, winnerLocation, looserLocation);
-				System.out.println("10");
 			} catch(Exception e){
 				e.printStackTrace();
 			}
@@ -137,7 +129,6 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 		if(pastTime == 0)
 			new PvERunnable(1).runTaskTimer(GameAPI.getAPI(), 0, 20L);
 		if(pastTime == conf.time.pveTime * 60) {
-			System.out.println("OK");
 			new PvPRunnable().runTaskTimer(GameAPI.getAPI(), 0, 20L);
 		}if(pastTime == conf.time.prepTime * 60){
 			if(conf.time.teleportAtPrepEnd){
@@ -163,7 +154,6 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 		}
 
 		if(countEntities() <= 1){
-			System.out.println("End");
 			doEnd();
 			cancel();
 		}
@@ -187,5 +177,10 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 	@Override
 	public int getProvidedCount() {
 		return 1;
+	}
+
+	@Override
+	public boolean displayed() {
+		return enabled;
 	}
 }
