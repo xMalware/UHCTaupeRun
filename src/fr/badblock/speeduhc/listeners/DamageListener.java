@@ -52,7 +52,7 @@ public class DamageListener extends BadListener  {
 				projectileSource = projectile.getShooter();
 			}
 			if (projectileSource != null && projectileSource instanceof Player) 
-				e.setCancelled(inGame() && PvPRunnable.pvp);
+				e.setCancelled(!inGame() || !PvPRunnable.pvp);
 			player.inGameData(UHCData.class).receivedDamage += e.getFinalDamage();
 		}
 
