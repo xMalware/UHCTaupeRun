@@ -26,10 +26,10 @@ public class UHCConfiguration {
 	
 	public class TimeConfig {
 		public boolean			   teleportAtPrepEnd = true;
-		public int				   totalTime		 = 10;
+		public int				   totalTime		 = 35;
 		public int				   pveTime			 = 1;
-		public int				   pvpTime			 = 1;
-		public int				   prepTime			 = 1;
+		public int				   pvpTime			 = 20;
+		public int				   prepTime			 = 15;
 	}
 	
 	public class MapConfig {
