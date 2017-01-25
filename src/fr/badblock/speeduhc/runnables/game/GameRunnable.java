@@ -95,6 +95,9 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 		if (winnerPlayer != null) {
 			winnerPlayer.getPlayerData().addRankedPoints(3);
 		}
+		if (winner != null) {
+			winner.getOnlinePlayers().forEach(plo -> plo.getPlayerData().addRankedPoints(3));
+		}
 
 		GameAPI.getAPI().getGameServer().setGameState(GameState.FINISHED);
 		Location winnerLocation = PluginUHC.getInstance().getDefaultLoc();
