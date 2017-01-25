@@ -22,6 +22,7 @@ import fr.badblock.speeduhc.PluginUHC;
 import fr.badblock.speeduhc.configuration.UHCConfiguration;
 import fr.badblock.speeduhc.players.TimeProvider;
 import fr.badblock.speeduhc.players.UHCData;
+import fr.badblock.speeduhc.result.UHCResults;
 import fr.badblock.speeduhc.runnables.EndEffectRunnable;
 import fr.badblock.speeduhc.runnables.KickRunnable;
 
@@ -113,7 +114,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 		}
 
 		try {
-			//new UHCResults(winner, winnerPlayer);
+			new UHCResults(winner, winnerPlayer);
 			new EndEffectRunnable(winnerLocation, winner).runTaskTimer(GameAPI.getAPI(), 0, 1L);
 		} catch(Exception e){
 			e.printStackTrace();
