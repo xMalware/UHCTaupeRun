@@ -29,7 +29,7 @@ public class UHCConfiguration {
 		public int				   totalTime		 = 35;
 		public int				   pveTime			 = 1;
 		public int				   pvpTime			 = 20;
-		public int				   prepTime			 = 15;
+		public int				   prepTime			 = 20;
 	}
 	
 	public class MapConfig {

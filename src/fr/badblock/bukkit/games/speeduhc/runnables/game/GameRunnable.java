@@ -132,12 +132,15 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 
 		if(pastTime == 0)
 			new PvERunnable(1).runTaskTimer(GameAPI.getAPI(), 0, 20L);
+
 		if(pastTime == conf.time.pveTime * 60) {
 			new PvPRunnable().runTaskTimer(GameAPI.getAPI(), 0, 20L);
-		}if(pastTime == conf.time.prepTime * 60){
+		}
+
+		if(pastTime == conf.time.prepTime * 60){
 			if(conf.time.teleportAtPrepEnd){
 				new EndTeleportRunnable().runTaskTimer(GameAPI.getAPI(), 0, 5L);
-				new PvERunnable(4).runTaskTimer(GameAPI.getAPI(), 0, 20L);
+				new PvERunnable(2).runTaskTimer(GameAPI.getAPI(), 0, 20L);
 			} else {
 				BorderUtils.setBorder(5, totalTime - pastTime - 30);
 
@@ -145,7 +148,7 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 					BorderUtils.setBorder(0, totalTime - pastTime - 30, conf.getNether());
 			}
 		}
-		
+
 
 		if (totalTime - pastTime == 0)
 			if(PluginUHC.getInstance().getConfiguration().allowTeams)
@@ -164,8 +167,8 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 
 		pastTime++;
 		for (BadblockPlayer bp : BukkitUtils.getPlayers())
-		if (bp.getCustomObjective() != null)
-			bp.getCustomObjective().generate();
+			if (bp.getCustomObjective() != null)
+				bp.getCustomObjective().generate();
 	}
 
 	@Override

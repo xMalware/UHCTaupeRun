@@ -44,6 +44,8 @@ public class PvPRunnable extends BukkitRunnable implements TimeProvider {
 			cancel();
 
 			pvp = true;
+			UHCScoreboard.setTimeProvider(GameRunnable.ins);
+			
 			TranslatableString title = new TranslatableString("uhcspeed.pvp.title");
 
 			for(Player player : Bukkit.getOnlinePlayers()){
