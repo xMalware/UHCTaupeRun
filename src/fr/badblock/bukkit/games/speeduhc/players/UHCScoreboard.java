@@ -1,5 +1,7 @@
 package fr.badblock.bukkit.games.speeduhc.players;
 
+import java.text.DecimalFormat;
+
 import org.bukkit.Bukkit;
 
 import fr.badblock.gameapi.GameAPI;
@@ -23,6 +25,8 @@ public class UHCScoreboard extends BadblockScoreboardGenerator {
 		});
 	}
 
+	public static final DecimalFormat df = new DecimalFormat("#");
+	
 	public static final String WINS 	  = "wins",
 			KILLS 	  = "kills",
 			DEATHS 	  = "deaths",
@@ -70,7 +74,8 @@ public class UHCScoreboard extends BadblockScoreboardGenerator {
 
 		objective.changeLine(i,  i18n("uhcspeed.scoreboard.aliveplayers", alivePlayers())); i--;
 		objective.changeLine(i,  i18n("uhcspeed.scoreboard.bordersize", "" + BorderUtils.getBorderSize() / 2)); i--;		
-
+		objective.changeLine(i,  i18n("uhcspeed.scoreboard.distance", distanceFromCenter())); i--;
+		
 		return i;
 	}
 
@@ -114,9 +119,14 @@ public class UHCScoreboard extends BadblockScoreboardGenerator {
 
 		return res + sec + "s";
 	}
+	
+	private String distanceFromCenter()
+	{
+		double dist = Math.abs(player.getLocation().getX()) + Math.abs(player.getLocation().getZ());
+		return df.format(dist);
+	}
 
 	private String i18n(String key, Object... args){
 		return GameAPI.i18n().get(player.getPlayerData().getLocale(), key, args)[0];
 	}
-
 }
