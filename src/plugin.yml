@@ -1,5 +1,5 @@
 name: BadblockSpeedUHC
-main: fr.badblock.speeduhc.PluginUHC
+main: fr.badblock.bukkit.games.speeduhc.PluginUHC
 version: 2.0
 depends: ['BadblockGameAPI']
 authors: ['LeLanN']
