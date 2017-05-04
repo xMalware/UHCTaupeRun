@@ -6,21 +6,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.badblock.bukkit.games.speeduhc.PluginUHC;
-import fr.badblock.bukkit.games.speeduhc.players.TimeProvider;
-import fr.badblock.bukkit.games.speeduhc.players.UHCScoreboard;
 import fr.badblock.bukkit.games.speeduhc.runnables.StartRunnable;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.utils.BukkitUtils;
 import fr.badblock.gameapi.utils.i18n.TranslatableString;
 
-public class PvPRunnable extends BukkitRunnable implements TimeProvider {
+public class PvPRunnable extends BukkitRunnable {
 	public static boolean pvp = false;
-
-	private int time;
+	public static PvPRunnable ins;
+	
+	public int time;
 
 	public PvPRunnable() {
+		ins = this;
 		time = PluginUHC.getInstance().getConfiguration().time.pvpTime * 60;
-		UHCScoreboard.setTimeProvider(this);
 	}
 
 	@Override
@@ -44,7 +43,6 @@ public class PvPRunnable extends BukkitRunnable implements TimeProvider {
 			cancel();
 
 			pvp = true;
-			UHCScoreboard.setTimeProvider(GameRunnable.ins);
 			
 			TranslatableString title = new TranslatableString("uhcspeed.pvp.title");
 
@@ -55,25 +53,5 @@ public class PvPRunnable extends BukkitRunnable implements TimeProvider {
 				bPlayer.sendTimings(2, 30, 2);
 			}
 		}
-	}
-
-	@Override
-	public String getId(int num) {
-		return num == 0 ? "deathmatch" : "pvp";
-	}
-
-	@Override
-	public int getTime(int num) {
-		return num == 0 ? GameRunnable.ins.totalTime - GameRunnable.ins.pastTime : time;
-	}
-
-	@Override
-	public int getProvidedCount() {
-		return 2;
-	}
-
-	@Override
-	public boolean displayed() {
-		return !pvp;
 	}
 }

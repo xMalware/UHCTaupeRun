@@ -6,22 +6,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.badblock.bukkit.games.speeduhc.PluginUHC;
-import fr.badblock.bukkit.games.speeduhc.players.TimeProvider;
-import fr.badblock.bukkit.games.speeduhc.players.UHCScoreboard;
 import fr.badblock.bukkit.games.speeduhc.runnables.StartRunnable;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.utils.BukkitUtils;
 import fr.badblock.gameapi.utils.i18n.TranslatableString;
 
-public class PvERunnable extends BukkitRunnable implements TimeProvider {
+public class PvERunnable extends BukkitRunnable {
 	public static boolean   pve   = false;
+	public static PvERunnable ins;
 	
-	private int time;
+	public int time;
 	
 	public PvERunnable(int div){
+		ins = this;
 		pve = false;
 		time = PluginUHC.getInstance().getConfiguration().time.pveTime * 60 / div;
-		UHCScoreboard.setTimeProvider(this);
 	}
 	
 	@Override
@@ -56,25 +55,5 @@ public class PvERunnable extends BukkitRunnable implements TimeProvider {
 			}
 			
 		}
-	}
-	
-	@Override
-	public String getId(int num) {
-		return num == 0 ? "pve" : "pvp";
-	}
-
-	@Override
-	public int getTime(int num) {
-		return time + (num == 1 ? PluginUHC.getInstance().getConfiguration().time.pvpTime * 60 : 0);
-	}
-
-	@Override
-	public int getProvidedCount() {
-		return 2;
-	}
-
-	@Override
-	public boolean displayed() {
-		return !pve;
 	}
 }

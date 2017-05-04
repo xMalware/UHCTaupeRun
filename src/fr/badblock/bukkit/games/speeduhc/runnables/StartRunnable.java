@@ -119,6 +119,10 @@ public class StartRunnable extends BukkitRunnable {
 			task = new StartRunnable(force ? 5 : TIME_BEFORE_START);
 			task.start();
 		}
+		else if(force)
+		{
+			task.time = 10;
+		}
 	}
 
 	public static void stopGame(){

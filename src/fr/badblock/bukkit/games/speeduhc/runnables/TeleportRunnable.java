@@ -15,7 +15,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.badblock.bukkit.games.speeduhc.PluginUHC;
 import fr.badblock.bukkit.games.speeduhc.UHCAchievementList;
 import fr.badblock.bukkit.games.speeduhc.configuration.UHCConfiguration;
+import fr.badblock.bukkit.games.speeduhc.players.UHCScoreboard;
 import fr.badblock.bukkit.games.speeduhc.runnables.game.GameRunnable;
+import fr.badblock.bukkit.games.speeduhc.runnables.game.UHCTimeManager;
 import fr.badblock.gameapi.GameAPI;
 import fr.badblock.gameapi.game.GameState;
 import fr.badblock.gameapi.players.BadblockPlayer;
@@ -30,6 +32,8 @@ public class TeleportRunnable extends BukkitRunnable {
 		GameAPI.getAPI().getGameServer().setGameState(GameState.RUNNING);
 		GameAPI.getAPI().getGameServer().saveTeamsAndPlayersForResult();
 
+		UHCScoreboard.setTimeProvider(new UHCTimeManager());
+		
 		Bukkit.getWorlds().forEach(world -> {
 			world.getEntities().forEach(entity -> {
 				if(entity.getType() != EntityType.PLAYER)

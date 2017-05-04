@@ -12,7 +12,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.badblock.bukkit.games.speeduhc.PluginUHC;
 import fr.badblock.bukkit.games.speeduhc.configuration.UHCConfiguration;
-import fr.badblock.bukkit.games.speeduhc.players.TimeProvider;
 import fr.badblock.bukkit.games.speeduhc.players.UHCData;
 import fr.badblock.bukkit.games.speeduhc.result.UHCResults;
 import fr.badblock.bukkit.games.speeduhc.runnables.EndEffectRunnable;
@@ -26,7 +25,7 @@ import fr.badblock.gameapi.utils.BorderUtils;
 import fr.badblock.gameapi.utils.BukkitUtils;
 import fr.badblock.gameapi.utils.i18n.TranslatableString;
 
-public class GameRunnable extends BukkitRunnable implements TimeProvider {
+public class GameRunnable extends BukkitRunnable {
 	public static GameRunnable ins;
 	public static boolean forceEnd = false;
 
@@ -169,25 +168,5 @@ public class GameRunnable extends BukkitRunnable implements TimeProvider {
 		for (BadblockPlayer bp : BukkitUtils.getPlayers())
 			if (bp.getCustomObjective() != null)
 				bp.getCustomObjective().generate();
-	}
-
-	@Override
-	public String getId(int num) {
-		return "deathmatch";
-	}
-
-	@Override
-	public int getTime(int num) {
-		return totalTime - pastTime;
-	}
-
-	@Override
-	public int getProvidedCount() {
-		return 1;
-	}
-
-	@Override
-	public boolean displayed() {
-		return enabled;
 	}
 }
