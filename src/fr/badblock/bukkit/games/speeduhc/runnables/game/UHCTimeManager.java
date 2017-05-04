@@ -10,7 +10,7 @@ public class UHCTimeManager implements TimeProvider {
 			return "pve";
 		
 		if(!PvPRunnable.pvp)
-			return "pvp";
+			return PvERunnable.i == 2 ? "pvp" : "teleport";
 		
 		return "end";
 	}

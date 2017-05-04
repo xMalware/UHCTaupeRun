@@ -14,10 +14,12 @@ import fr.badblock.gameapi.utils.i18n.TranslatableString;
 public class PvERunnable extends BukkitRunnable {
 	public static boolean   pve   = false;
 	public static PvERunnable ins;
+	public static int i = 0;
 	
 	public int time;
 	
 	public PvERunnable(int div){
+		i++;
 		ins = this;
 		pve = false;
 		time = PluginUHC.getInstance().getConfiguration().time.pveTime * 60 / div;
