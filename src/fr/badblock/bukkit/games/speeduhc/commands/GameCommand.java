@@ -30,10 +30,7 @@ public class GameCommand extends AbstractCommand {
 			case "start":
 				String msg = "commands.grush.start";
 				
-				if(!StartRunnable.started()){
-					StartRunnable.startGame(true);
-				} else msg += "-fail";
-				
+				StartRunnable.startGame(true);
 				player.sendTranslatedMessage(msg);
 			break;
 			case "stop":
