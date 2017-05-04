@@ -6,10 +6,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.block.Action;
-import org.bukkit.projectiles.ProjectileSource;
 
 import fr.badblock.bukkit.games.speeduhc.runnables.game.PvERunnable;
 import fr.badblock.bukkit.games.speeduhc.runnables.game.PvPRunnable;
@@ -95,7 +92,7 @@ public class UHCMapProtector implements MapProtector {
 	
 	@Override
 	public boolean canInteractEntity(BadblockPlayer player, Entity entity) {
-		return true; // à priori rien à bloquer ... :o
+		return true; // ï¿½ priori rien ï¿½ bloquer ... :o
 	}
 
 	@Override
@@ -200,7 +197,10 @@ public class UHCMapProtector implements MapProtector {
 
 	@Override
 	public boolean canEntityBeingDamaged(Entity entity) {
-		return inGame() && ((entity.getType().equals(EntityType.PLAYER) && PvERunnable.pve) || !entity.getType().equals(EntityType.PLAYER));
+		if(entity.getType() != EntityType.PLAYER)
+			return inGame();
+		
+		return inGame() && PvERunnable.pve;
 	}
 
 	@Override
@@ -210,13 +210,10 @@ public class UHCMapProtector implements MapProtector {
 	
 	@Override
 	public boolean canEntityBeingDamaged(Entity entity, BadblockPlayer badblockPlayer) {
-		ProjectileSource projectileSource = null;
-		if (entity instanceof Projectile) {
-			Projectile projectile = (Projectile) entity;
-			projectileSource = projectile.getShooter();
-		}
-		if (entity.getType().equals(EntityType.PLAYER) || (projectileSource != null && projectileSource instanceof Player)) return inGame() && PvPRunnable.pvp;
-		return inGame() && PvERunnable.pve;
+		if(entity.getType() == EntityType.PLAYER)
+			return inGame() && PvPRunnable.pvp;
+		
+		return inGame();
 	}
 
 }
