@@ -22,7 +22,7 @@ public class StartRunnable extends BukkitRunnable {
 	protected static 	   StartRunnable      task 		       = null;
 	public    static 	   GameRunnable 	  gameTask		   = null;
 
-	private int time;
+	public static int time;
 
 	@Override
 	public void run() {
@@ -102,26 +102,29 @@ public class StartRunnable extends BukkitRunnable {
 
 	public static void joinNotify(int currentPlayers, int maxPlayers){
 		if (task != null) {
-			int a = task.time - (TIME_BEFORE_START / Bukkit.getMaxPlayers());
-			if ((a < task.time && task.time <= 10) || ((a < 10 || Bukkit.getOnlinePlayers().size() >= Bukkit.getMaxPlayers()) && task.time >= 10)) task.time = 10;
-			else task.time = a;
+			int a = time - (TIME_BEFORE_START / Bukkit.getMaxPlayers());
+			if (time >= 60 && (a <= 60 || Bukkit.getOnlinePlayers().size() >= Bukkit.getMaxPlayers())) time = 60;
+			else if (time >= 60) time = a;
 		}
-		int minPlayers = PluginUHC.getInstance().getConfiguration().minPlayers;
-
-		if(currentPlayers >= minPlayers)
-			startGame(false);
+		if(currentPlayers < PluginUHC.getInstance().getConfiguration().minPlayers) return;
+		
+		startGame(false);
+		int a = time - (TIME_BEFORE_START / Bukkit.getMaxPlayers());
+		if (time >= 60 && (a <= 60 || Bukkit.getOnlinePlayers().size() >= Bukkit.getMaxPlayers())) time = 60;
+		else if (time <= 60) time = a;
 	}
 
 	public static void startGame(boolean force){
 		GameRunnable.forceEnd = false;
 
 		if(task == null){
-			task = new StartRunnable(force ? 5 : TIME_BEFORE_START);
+			time = force ? 5 : TIME_BEFORE_START;
+			task = new StartRunnable();
 			task.start();
 		}
 		else if(force)
 		{
-			task.time = 10;
+			time = 10;
 		}
 	}
 
@@ -129,7 +132,7 @@ public class StartRunnable extends BukkitRunnable {
 		GameRunnable.forceEnd = true;
 
 		if(task != null){
-			task.time = TIME_BEFORE_START;
+			time = TIME_BEFORE_START;
 			task.cancel();
 		}
 

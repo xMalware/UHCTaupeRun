@@ -144,6 +144,7 @@ public class PluginUHC extends BadblockPlugin {
 			new MoveListener();
 			new DeathListener();
 			new JoinListener();
+			new QuitListener();
 			new PartyJoinListener();
 			new CraftListener();
 			new DamageListener();
