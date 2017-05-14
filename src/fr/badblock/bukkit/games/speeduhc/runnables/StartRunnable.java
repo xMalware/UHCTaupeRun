@@ -104,9 +104,9 @@ public class StartRunnable extends BukkitRunnable {
 		if(currentPlayers < PluginUHC.getInstance().getConfiguration().minPlayers) return;
 		
 		startGame(false);
-			int a = time - (TIME_BEFORE_START / Bukkit.getMaxPlayers());
-			if (time >= 60 && (a <= 60 || Bukkit.getOnlinePlayers().size() >= Bukkit.getMaxPlayers())) time = 60;
-			else if (time >= 60) time = a;
+		int a = time - (TIME_BEFORE_START / Bukkit.getMaxPlayers());
+		if (time >= 60 && (a <= 60 || Bukkit.getOnlinePlayers().size() >= Bukkit.getMaxPlayers())) time = 60;
+		else if (time >= 60) time = a;
 	}
 
 	public static void startGame(boolean force){
@@ -126,8 +126,8 @@ public class StartRunnable extends BukkitRunnable {
 		GameRunnable.forceEnd = true;
 
 		if(task != null){
-			time = TIME_BEFORE_START;
 			task.cancel();
+			time = time > 60 ? time : 60;
 			GameAPI.setJoinable(true);
 		}
 
