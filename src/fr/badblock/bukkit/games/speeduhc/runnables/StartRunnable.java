@@ -22,7 +22,7 @@ public class StartRunnable extends BukkitRunnable {
 	protected static 	   StartRunnable      task 		       = null;
 	public    static 	   GameRunnable 	  gameTask		   = null;
 
-	public static int time;
+	public static int time = TIME_BEFORE_START;
 
 	@Override
 	public void run() {
