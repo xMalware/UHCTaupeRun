@@ -112,5 +112,6 @@ public class DeathListener extends BadListener {
 
 		player.getCustomObjective().generate();
 		e.setRespawnPlace(respawnPlace);
+		player.postResult(null);
 	}
 }
