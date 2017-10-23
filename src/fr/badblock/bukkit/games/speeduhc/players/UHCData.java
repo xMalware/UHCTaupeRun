@@ -9,6 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.badblock.bukkit.games.speeduhc.UHCAchievementList;
 import fr.badblock.bukkit.games.speeduhc.runnables.game.GameRunnable;
 import fr.badblock.gameapi.GameAPI;
+import fr.badblock.gameapi.game.rankeds.RankedManager;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.players.BadblockPlayer.BadblockMode;
 import fr.badblock.gameapi.players.BadblockTeam;
@@ -91,6 +92,7 @@ public class UHCData implements InGameData {
 			
 			bp.sendTranslatedTitle("uhcspeed.title-win", winner == null ? winnerPlayer.getName() : winner.getChatName());
 			bp.getPlayerData().incrementStatistic("uhcspeed", UHCScoreboard.WINS);
+			bp.getPlayerData().incrementTempRankedData(RankedManager.instance.getCurrentRankedGameName(), UHCScoreboard.WINS, 1);
 
 			bp.getPlayerData().incrementAchievements(bp, UHCAchievementList.UHC_WIN_1, UHCAchievementList.UHC_WIN_2, UHCAchievementList.UHC_WIN_3, UHCAchievementList.UHC_WIN_4);
 			bp.getPlayerData().incrementAchievements(bp, UHCAchievementList.UHC_SURVI_1, UHCAchievementList.UHC_SURVI_2, UHCAchievementList.UHC_SURVI_3, UHCAchievementList.UHC_SURVI_4);
@@ -118,7 +120,10 @@ public class UHCData implements InGameData {
 			bp.getPlayerData().incrementAchievements(bp, UHCAchievementList.UHC_LOOSER);
 			
 			if(bp.getBadblockMode() == BadblockMode.PLAYER)
+			{
 				bp.getPlayerData().incrementStatistic("uhcspeed", UHCScoreboard.LOOSES);
+				bp.getPlayerData().incrementTempRankedData(RankedManager.instance.getCurrentRankedGameName(), UHCScoreboard.LOOSES, 1);
+			}
 		}
 
 		if(badcoins > 20 * bp.getPlayerData().getBadcoinsMultiplier())

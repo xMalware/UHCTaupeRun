@@ -20,6 +20,7 @@ import fr.badblock.gameapi.events.fakedeaths.FakeDeathEvent;
 import fr.badblock.gameapi.events.fakedeaths.FightingDeathEvent;
 import fr.badblock.gameapi.events.fakedeaths.FightingDeathEvent.FightingDeaths;
 import fr.badblock.gameapi.events.fakedeaths.NormalDeathEvent;
+import fr.badblock.gameapi.game.rankeds.RankedManager;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.players.BadblockPlayer.BadblockMode;
 import fr.badblock.gameapi.players.BadblockTeam;
@@ -64,10 +65,12 @@ public class DeathListener extends BadListener {
 			player.getOpenInventory().setCursor(null);
 		player.getPlayerData().addRankedPoints(-2);
 		player.getPlayerData().incrementStatistic("uhcspeed", UHCScoreboard.DEATHS);
+		player.getPlayerData().incrementTempRankedData(RankedManager.instance.getCurrentRankedGameName(), UHCScoreboard.DEATHS, 1);
 		player.inGameData(UHCData.class).killed(player, killer, last);
 		player.getCustomObjective().generate();
 
 		player.getPlayerData().incrementStatistic("uhcspeed", UHCScoreboard.LOOSES);
+		player.getPlayerData().incrementTempRankedData(RankedManager.instance.getCurrentRankedGameName(), UHCScoreboard.LOOSES, 1);
 		BadblockTeam team = player.getTeam();
 
 		player.sendTranslatedTitle("uhcspeed.player-loose-title");
@@ -105,6 +108,7 @@ public class DeathListener extends BadListener {
 		if(killer != null && killer.getType() == EntityType.PLAYER){
 			BadblockPlayer bKiller = (BadblockPlayer) killer;
 			bKiller.getPlayerData().incrementStatistic("uhcspeed", UHCScoreboard.KILLS);
+			bKiller.getPlayerData().incrementTempRankedData(RankedManager.instance.getCurrentRankedGameName(), UHCScoreboard.KILLS, 1);
 			bKiller.inGameData(UHCData.class).kills++;
 
 			bKiller.getCustomObjective().generate();

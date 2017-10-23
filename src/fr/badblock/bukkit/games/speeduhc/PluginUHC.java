@@ -21,11 +21,13 @@ import fr.badblock.bukkit.games.speeduhc.listeners.MoveListener;
 import fr.badblock.bukkit.games.speeduhc.listeners.PartyJoinListener;
 import fr.badblock.bukkit.games.speeduhc.listeners.QuitListener;
 import fr.badblock.bukkit.games.speeduhc.listeners.UHCMapProtector;
+import fr.badblock.bukkit.games.speeduhc.players.UHCScoreboard;
 import fr.badblock.bukkit.games.speeduhc.runnables.PreStartRunnable;
 import fr.badblock.gameapi.BadblockPlugin;
 import fr.badblock.gameapi.GameAPI;
 import fr.badblock.gameapi.achievements.AchievementList;
 import fr.badblock.gameapi.game.GameServer.WhileRunningConnectionTypes;
+import fr.badblock.gameapi.game.rankeds.RankedManager;
 import fr.badblock.gameapi.players.kits.PlayerKit;
 import fr.badblock.gameapi.run.BadblockGame;
 import fr.badblock.gameapi.run.BadblockGameData;
@@ -163,6 +165,11 @@ public class PluginUHC extends BadblockPlugin {
 				world.setTime(2000L);
 				world.getEntities().forEach(entity -> entity.remove());
 			});
+			
+			// Ranked
+			RankedManager.instance.initialize(RankedManager.instance.getCurrentRankedGameName(), 
+					UHCScoreboard.KILLS, UHCScoreboard.DEATHS, UHCScoreboard.WINS, UHCScoreboard.LOOSES);
+			
 		} catch(Throwable e){
 			e.printStackTrace();
 		}

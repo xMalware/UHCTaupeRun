@@ -13,11 +13,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.badblock.bukkit.games.speeduhc.PluginUHC;
 import fr.badblock.bukkit.games.speeduhc.configuration.UHCConfiguration;
 import fr.badblock.bukkit.games.speeduhc.players.UHCData;
+import fr.badblock.bukkit.games.speeduhc.players.UHCScoreboard;
 import fr.badblock.bukkit.games.speeduhc.result.UHCResults;
 import fr.badblock.bukkit.games.speeduhc.runnables.EndEffectRunnable;
 import fr.badblock.bukkit.games.speeduhc.runnables.KickRunnable;
 import fr.badblock.gameapi.GameAPI;
 import fr.badblock.gameapi.game.GameState;
+import fr.badblock.gameapi.game.rankeds.RankedCalc;
+import fr.badblock.gameapi.game.rankeds.RankedManager;
 import fr.badblock.gameapi.players.BadblockPlayer;
 import fr.badblock.gameapi.players.BadblockPlayer.BadblockMode;
 import fr.badblock.gameapi.players.BadblockTeam;
@@ -115,6 +118,30 @@ public class GameRunnable extends BukkitRunnable {
 			}
 		}
 
+		// Work with rankeds
+		String rankedGameName = RankedManager.instance.getCurrentRankedGameName();
+		for (BadblockPlayer player : BukkitUtils.getPlayers())
+		{
+			RankedManager.instance.calcPoints(rankedGameName, player, new RankedCalc()
+			{
+
+				@Override
+				public long done() {
+					double kills = RankedManager.instance.getData(rankedGameName, player, UHCScoreboard.KILLS);
+					double deaths = RankedManager.instance.getData(rankedGameName, player, UHCScoreboard.DEATHS);
+					double wins = RankedManager.instance.getData(rankedGameName, player, UHCScoreboard.WINS);
+					double looses = RankedManager.instance.getData(rankedGameName, player, UHCScoreboard.LOOSES);
+					double total = 
+							( (kills * 2) + (wins * 4) + 
+									((kills / (deaths > 0 ? deaths : 1) ) ) )
+							/ (1 + looses);
+					return (long) total;
+				}
+
+			});
+		}
+		RankedManager.instance.fill(rankedGameName);
+		
 		try {
 			new UHCResults(winner, winnerPlayer);
 			new EndEffectRunnable(winnerLocation, winner).runTaskTimer(GameAPI.getAPI(), 0, 1L);
