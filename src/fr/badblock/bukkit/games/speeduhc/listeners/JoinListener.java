@@ -97,7 +97,7 @@ public class JoinListener extends BadListener {
 				}
 			}.runTaskLater(GameAPI.getAPI(), 15L);
 
-			GameMessages.joinMessage(GameAPI.getGameName(), player.getName(), Bukkit.getOnlinePlayers().size(), PluginUHC.getInstance().getMaxPlayers()).broadcast();
+			GameMessages.joinMessage(GameAPI.getGameName(), player.getTabGroupPrefix().getAsLine(player) + player.getName(), Bukkit.getOnlinePlayers().size(), PluginUHC.getInstance().getMaxPlayers()).broadcast();
 		}
 		PreStartRunnable.doJob();
 		StartRunnable.joinNotify(Bukkit.getOnlinePlayers().size(), PluginUHC.getInstance().getMaxPlayers());
